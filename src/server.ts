@@ -13,30 +13,40 @@ export function buildServer(): McpServer {
 
   // ─── Tools ───────────────────────────────────────────────────────────────
 
-  server.tool(
+  server.registerTool(
     "ping",
-    "Responds with pong, optionally echoing back a message.",
-    { message: z.string().optional().describe("Optional message to include in the response") },
+    {
+      description: "Responds with pong, optionally echoing back a message.",
+      inputSchema: {
+        message: z.string().optional().describe("Optional message to include in the response"),
+      },
+    },
     async ({ message }) => ({
       content: [{ type: "text", text: message ? `pong: ${message}` : "pong" }],
     }),
   );
 
-  server.tool(
+  server.registerTool(
     "echo",
-    "Returns the exact text provided.",
-    { text: z.string().describe("Text to echo back") },
+    {
+      description: "Returns the exact text provided.",
+      inputSchema: {
+        text: z.string().describe("Text to echo back"),
+      },
+    },
     async ({ text }) => ({
       content: [{ type: "text", text }],
     }),
   );
 
-  server.tool(
+  server.registerTool(
     "add",
-    "Adds two numbers and returns the result.",
     {
-      a: z.number().describe("First number"),
-      b: z.number().describe("Second number"),
+      description: "Adds two numbers and returns the result.",
+      inputSchema: {
+        a: z.number().describe("First number"),
+        b: z.number().describe("Second number"),
+      },
     },
     async ({ a, b }) => ({
       content: [{ type: "text", text: String(a + b) }],
@@ -45,7 +55,7 @@ export function buildServer(): McpServer {
 
   // ─── Resources ───────────────────────────────────────────────────────────
 
-  server.resource(
+  server.registerResource(
     "health-status",
     "health://status",
     { mimeType: "text/plain", description: "Server health status" },
@@ -54,7 +64,7 @@ export function buildServer(): McpServer {
     }),
   );
 
-  server.resource(
+  server.registerResource(
     "public-config",
     "config://public",
     { mimeType: "application/json", description: "Non-secret public server configuration" },
@@ -79,7 +89,7 @@ export function buildServer(): McpServer {
 
   // Dynamic resource: hello://{name}
   // ResourceTemplate uses RFC 6570 URI templates; extracted variables are passed to the handler.
-  server.resource(
+  server.registerResource(
     "hello",
     new ResourceTemplate("hello://{name}", { list: undefined }),
     { mimeType: "text/plain", description: "A personalized greeting" },
@@ -90,10 +100,14 @@ export function buildServer(): McpServer {
 
   // ─── Prompts ─────────────────────────────────────────────────────────────
 
-  server.prompt(
+  server.registerPrompt(
     "review-code",
-    "Generates a prompt that asks a model to review the provided code.",
-    { code: z.string().describe("Source code to review") },
+    {
+      description: "Generates a prompt that asks a model to review the provided code.",
+      argsSchema: {
+        code: z.string().describe("Source code to review"),
+      },
+    },
     async ({ code }) => ({
       messages: [
         {

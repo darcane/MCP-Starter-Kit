@@ -319,10 +319,12 @@ mcp-starter-kit/
 In `src/server.ts`, inside `buildServer()`:
 
 ```typescript
-server.tool(
+server.registerTool(
   "my-tool",
-  "Short description shown to models.",
-  { input: z.string() },
+  {
+    description: "Short description shown to models.",
+    inputSchema: { input: z.string() },
+  },
   async ({ input }) => ({
     content: [{ type: "text", text: `You said: ${input}` }],
   }),
@@ -332,7 +334,7 @@ server.tool(
 ### Add a new static resource
 
 ```typescript
-server.resource(
+server.registerResource(
   "my-resource",
   "myscheme://some-path",
   { mimeType: "text/plain" },
@@ -345,7 +347,7 @@ server.resource(
 ### Add a new dynamic resource
 
 ```typescript
-server.resource(
+server.registerResource(
   "user-profile",
   new ResourceTemplate("users://{userId}/profile", { list: undefined }),
   { mimeType: "application/json" },
