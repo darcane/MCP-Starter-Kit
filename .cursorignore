@@ -1,0 +1,8 @@
+# Cursor should not index these
+node_modules/
+dist/
+.git/
+agent-transcripts/
+mcps/
+*.log
+*.tsbuildinfo

@@ -1,0 +1,28 @@
+# Docker MCP Toolkit – server definition file
+#
+# Add this server to a profile:
+#   docker mcp profile server add <profile> --server file://./server.yaml
+#
+# Or reference the built image directly:
+#   docker mcp profile server add <profile> --server docker://mcp-starter-kit:latest
+#
+# Then run the gateway:
+#   docker mcp gateway run --profile <profile>
+
+name: mcp-starter-kit
+title: MCP Starter Kit
+type: server
+image: mcp-starter-kit:latest
+description: >
+  A barebones MCP server starter kit featuring example tools (ping, echo, add),
+  resources (health://status, config://public, hello://{name}), and a prompt
+  (review-code). Supports both stdio and Streamable HTTP transports.
+
+# The gateway runs this image via stdio (docker run -i).
+# Environment variables can be set after adding:
+#   docker mcp profile config <profile> --set mcp-starter-kit.MCP_AUTH_TOKEN=your-secret
+#
+# Supported env vars:
+#   MCP_MODE       – "stdio" (default) or "http"
+#   PORT           – HTTP port when MCP_MODE=http (default: 3000)
+#   MCP_AUTH_TOKEN – enables Bearer token auth on /mcp routes (http mode only)

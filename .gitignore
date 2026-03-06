@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment variables – never commit secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor / IDE
+.vscode/
+.idea/
+
+# TypeScript incremental build cache
+*.tsbuildinfo
+
+# Cursor workspace internals (MCP descriptors, agent transcripts, etc.)
+.cursor/
+agent-transcripts/
+mcps/

@@ -1,0 +1,30 @@
+{
+  "name": "mcp-starter-kit",
+  "version": "1.0.0",
+  "description": "Barebones MCP server starter kit – stdio + Streamable HTTP, TypeScript, ESM",
+  "type": "module",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "dev:http": "cross-env MCP_MODE=http tsx src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "start:http": "cross-env MCP_MODE=http node dist/index.js",
+    "inspect": "npx @modelcontextprotocol/inspector node dist/index.js",
+    "inspect:http": "npx @modelcontextprotocol/inspector --transport streamablehttp --url http://localhost:3000/mcp"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.10.0",
+    "express": "^4.21.2",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.13.0",
+    "cross-env": "^7.0.3",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
+}
